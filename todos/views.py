@@ -22,17 +22,22 @@ class ProjectModelViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
+
+
 #    pagination_class = ProjectLimitOffsetPagination
 
 
 class TodoModelViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
-                       UpdateModelMixin,  # DestroyModelMixin,
+                       UpdateModelMixin, DestroyModelMixin,
                        GenericViewSet):
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     queryset = Todo.objects.all()
     serializer_class = TodoModelSerializer
+
+
 #    pagination_class = TodoLimitOffsetPagination
 
-    def perform_destoy(self, instance):
-        instance.is_deleted = True
-        instance.save()
+
+def perform_destoy(instance):
+    instance.is_deleted = True
+    instance.save()
